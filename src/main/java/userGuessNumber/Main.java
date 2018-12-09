@@ -1,4 +1,4 @@
-package userGuessNumber1;
+package userGuessNumber;
 
 import java.util.Random;
 import java.util.Scanner;
