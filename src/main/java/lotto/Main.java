@@ -44,7 +44,7 @@ public class Main {
         Random random = new Random();
         Set<Integer> userNumbers = new TreeSet<>();
         Set<Integer> randNumbers = new TreeSet<>();
-        char again = 'r';
+        char again;
 
         do {
             userNumbers.clear();
@@ -73,7 +73,7 @@ public class Main {
             }
 
             while (randNumbers.size() < 6) {
-                randNumbers.add(random.nextInt(50));
+                randNumbers.add(random.nextInt(50) + 1);
             }
 
             for (int uNumber : userNumbers) {
