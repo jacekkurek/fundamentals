@@ -26,30 +26,35 @@ public class Main {
     }
 
     private static int[] parseInput(String input) {
-        int[] result = new int[3];
+        int[] parsedNumbers = new int[3];
         String[] s1 = input.split("d");
         if (s1[0].equals("")) {
-            result[0] = 1;
+            parsedNumbers[0] = 1;
         } else {
-            result[0] = Integer.parseInt(s1[0]);
+            parsedNumbers[0] = Integer.parseInt(s1[0]);
         }
 
         if (input.contains("+")) {
             String[] s2 = s1[1].split("\\+");
-            result[1] = Integer.parseInt(s2[0]);
-            result[2] = Integer.parseInt(s2[1]);
+            parsedNumbers[1] = Integer.parseInt(s2[0]);
+            parsedNumbers[2] = Integer.parseInt(s2[1]);
         } else if (input.contains("-")) {
             String[] s2 = s1[1].split("-");
-            result[1] = Integer.parseInt(s2[0]);
-            result[2] = -Integer.parseInt(s2[1]);
+            parsedNumbers[1] = Integer.parseInt(s2[0]);
+            parsedNumbers[2] = -Integer.parseInt(s2[1]);
         } else {
-            result[1] = Integer.parseInt(s1[1]);
+            parsedNumbers[1] = Integer.parseInt(s1[1]);
         }
-        return result;
+        return parsedNumbers;
     }
 
-    private static void resultMsg(int[] result, Random random) {
-        System.out.println(result[0] + random.nextInt(result[1]) + result[2]);
+    private static void resultMsg(int[] parsedNumbers) {
+        Random random = new Random();
+        int score = 0;
+        for (int i = 0; i < parsedNumbers[0]; i++) {
+            score += random.nextInt(parsedNumbers[1])+1;
+        }
+        System.out.println("Score: " + (score + parsedNumbers[2]));
     }
 
     private static char repeatPrompt() {
@@ -65,12 +70,11 @@ public class Main {
     public static void main(String[] args) {
 
         char repeat;
-        Random random = new Random();
         do {
             welcomeMsg();
             String input = readAndValidateInput();
-            int[] result = parseInput(input);
-            resultMsg(result, random);
+            int[] parsedNumbers = parseInput(input);
+            resultMsg(parsedNumbers);
             repeat = repeatPrompt();
         } while (repeat == 'y');
     }
