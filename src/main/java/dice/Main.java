@@ -1,6 +1,7 @@
 package dice;
 
-import java.util.*;
+import java.util.Random;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,13 +11,10 @@ public class Main {
         System.out.println("Let's play a game.\nDescribe what to throw");
     }
 
-    private static String readAndValidateInput() {
-        Scanner scanner = new Scanner(System.in);
+    private static String readAndValidateInput(Scanner scanner) {
         Pattern validPattern = Pattern.compile("\\d*d\\d+(([-+])\\d+)?");
-
         String input = scanner.next().toLowerCase();
         Matcher matcher = validPattern.matcher(input);
-
         while (!matcher.matches()) {
             System.out.println("Invalid format");
             input = scanner.next().toLowerCase();
@@ -48,8 +46,7 @@ public class Main {
         return parsedNumbers;
     }
 
-    private static void resultMsg(int[] parsedNumbers) {
-        Random random = new Random();
+    private static void resultMsg(int[] parsedNumbers, Random random) {
         int score = 0;
         for (int i = 0; i < parsedNumbers[0]; i++) {
             score += random.nextInt(parsedNumbers[1])+1;
@@ -57,11 +54,10 @@ public class Main {
         System.out.println("Score: " + (score + parsedNumbers[2]));
     }
 
-    private static char repeatPrompt() {
+    private static char repeatPrompt(Scanner scanner) {
         char repeat;
         do {
             System.out.println("Play again? y / n");
-            Scanner scanner = new Scanner(System.in);
             repeat = scanner.next().toLowerCase().charAt(0);
         } while (repeat != 'y' && repeat != 'n');
         return repeat;
@@ -69,13 +65,15 @@ public class Main {
 
     public static void main(String[] args) {
 
+        Random random = new Random();
+        Scanner scanner = new Scanner(System.in);
         char repeat;
         do {
             welcomeMsg();
-            String input = readAndValidateInput();
+            String input = readAndValidateInput(scanner);
             int[] parsedNumbers = parseInput(input);
-            resultMsg(parsedNumbers);
-            repeat = repeatPrompt();
+            resultMsg(parsedNumbers, random);
+            repeat = repeatPrompt(scanner);
         } while (repeat == 'y');
     }
 }
